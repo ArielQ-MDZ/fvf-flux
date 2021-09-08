@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: odoo
+  name: odoo
+  namespace: fvf-odoo
+spec:
+  type: NodePort
+  ports:
+    - name: "8069"
+      port: 8069
+      targetPort: 8069
+      protocol: TCP
+  selector:
+    io.kompose.service: odoo

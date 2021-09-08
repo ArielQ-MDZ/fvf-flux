@@ -1,0 +1,46 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ingressroutetls
+  namespace: fvf-odoo
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`fvf.nanodoo.com`)
+    kind: Rule
+    services:
+    - name: odoo
+      port: 8069
+  tls:
+    certResolver: default
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: http-fvf.nanodoo.com-redirect-to-https
+  namespace: fvf-odoo
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`fvf.nanodoo.com`)
+      kind: Rule 
+      services:
+        - name: odoo
+          port: 8069
+      middlewares:
+        - name: fvf-redirect-https
+          namespace: fvf-odoo
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: fvf-redirect-https
+  namespace: fvf-odoo
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: "true"
+    port: 443
