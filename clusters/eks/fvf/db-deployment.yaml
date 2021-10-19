@@ -35,11 +35,12 @@ spec:
             - containerPort: 5432
           resources: {}
           volumeMounts:
-            - mountPath: /var/lib/postgresql/data
+            - mountPath: "/var/lib/postgresql/data"
               name: odoo-db-data
       restartPolicy: Always
       volumes:
         - name: odoo-db-data
           persistentVolumeClaim:
-            claimName: odoo-db-data
+            claimName: nfs-pvc
+            readOnly: false
 status: {}

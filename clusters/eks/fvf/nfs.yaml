@@ -1,0 +1,43 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: oci-fss
+  namespace: fvf-odoo
+provisioner: oracle.com/oci-fss
+parameters:
+  mntTargetId: ocid1.mounttarget.oc1.sa_santiago_1.aaaaaa4np2suuhbdonrwyllqojxwiottmewxgylooruwcz3pfuys2ylefuyqaaaa
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-pv 
+  namespace: fvf-odoo
+spec:
+  storageClassName: oci-fss
+  capacity:
+    storage: 100Gi
+  accessModes:
+    - ReadWriteMany 
+  mountOptions:
+  - nosuid
+  nfs: 
+    path: "/fvf-odoo"
+    server: 10.0.20.20
+    readOnly: false
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-pvc
+  namespace: fvf-odoo
+spec:
+  storageClassName: oci-fss
+  accessModes:
+  - ReadWriteMany      
+  resources:
+     requests:
+       storage: 100Gi
+  volumeName: nfs-pv
