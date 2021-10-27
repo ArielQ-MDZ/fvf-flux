@@ -41,5 +41,6 @@ spec:
       volumes:
         - name: odoo-db-data
           persistentVolumeClaim:
-            claimName: odoo-db-data
+            claimName: nfs-pvc
+            readOnly: false
 status: {}
