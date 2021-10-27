@@ -9,7 +9,7 @@ metadata:
   annotations:
     fluxcd.io/automated: "true"
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       io.kompose.service: odoo
@@ -36,5 +36,6 @@ spec:
       volumes:
         - name: odoo-web-data
           persistentVolumeClaim:
-            claimName: odoo-web-data
+            claimName: nfs-pvc
+            readOnly: false
 status: {}
