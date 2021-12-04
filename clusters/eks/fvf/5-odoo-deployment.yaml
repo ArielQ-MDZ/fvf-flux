@@ -24,7 +24,7 @@ spec:
       securityContext:
         fsGroup: 101
       containers:
-        - image: awisky/fvf:main-202112050207 # {"$imagepolicy": "flux-system:odoo"}
+        - image: awisky/fvf:main-202112050454 # {"$imagepolicy": "flux-system:odoo"}
           name: odoo
           imagePullPolicy: Always
           ports:
